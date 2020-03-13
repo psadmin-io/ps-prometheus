@@ -133,7 +133,7 @@ rules:
   - pattern: 'com.peoplesoft<DomainRuntime=(\w+), Type=NetworkStatisticsRuntime><>TCPSockets(\w+)'
     name: peoplesoft_appsrv_tcp_state
     type: GAUGE
-    help: TCP Sockets in Close Wait State
+    help: Gauge of TCP Sockets in various states
     labels:
       domain: $1
       state: $2
