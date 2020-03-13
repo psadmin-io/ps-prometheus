@@ -12,7 +12,7 @@ You'll need the latest javaagent release of the [JMX Exporter](https://github.co
 Choose a port number, and modify `psappsrv.cfg` or `psprcs.cfg` as shown:
 ```
 [PSMONITORSRV]
-JavaVM Options=-Dxdo.ConfigFile=%PS_HOME%/appserv/xdo.cfg -javaagent:/path/to/jmx_prometheus_javaagent-0.12.0.jar=PORTNUM:/path/to/config.yml -Xms32m -Xmx256m
+JavaVM Options=-Dxdo.ConfigFile=%PS_HOME%/appserv/xdo.cfg **-javaagent:/path/to/jmx_prometheus_javaagent-0.12.0.jar=PORTNUM:/path/to/config.yml** -Xms32m -Xmx256m
 ```
 
 
