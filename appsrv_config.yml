@@ -1,0 +1,149 @@
+---
+startDelaySeconds: 0
+ssl: false
+lowercaseOutputName: true
+lowercaseOutputLabelNames: false
+blacklistObjectNames: ["com.peoplesoft:DomainRuntime=*,Type=LogFileRuntime,Name=*"]
+rules:
+#  - pattern: '.*'
+  - pattern: 'com.peoplesoft<Server=(\w+), Instance=(\d+), Type=ManagedObjectCacheRuntime><>TotalMemorySize'
+    name: peoplesoft_appsrv_memory_total
+    type: GAUGE
+    help: TotalMemorySize per Thread (Bytes)
+#    valueFactor: 1000
+    labels:
+      process: $1_$2
+  
+  - pattern: 'com.peoplesoft<Server=(\w+), Instance=(\d+), Type=RequestExecutorRuntime><>LongRunningRequestCount'
+    name: peoplesoft_appsrv_long_running_request
+    type: GAUGE
+    help: Long running request gauge
+    labels:
+      process: $1_$2
+
+  - pattern: 'com.peoplesoft<Server=(\w+), Instance=(\d+), Type=RequestExecutorRuntime><>TotalRequestCount'
+    name: peoplesoft_appsrv_request_total
+    type: COUNTER
+    help: App Server Request Count Total Per Thread
+    labels:
+      process: $1_$2
+
+  - pattern: 'com.peoplesoft<DomainRuntime=(\w+), Type=TuxedoQueueRuntime, Name=(APPQ|SUBHQ_\w+|PUBHQ_\w+)><>CurrentQueueDepth'
+    name: peoplesoft_appsrv_queue_depth
+    type: GAUGE
+    help: APPQ queue depth
+    labels:
+      queue: $2
+
+  - pattern: 'com.peoplesoft<Server=(\w+), Instance=(\d+), Type=RequestExecutorRuntime><>AverageProcessingTime'
+    name: peoplesoft_appsrv_average_processing_time
+    type: GAUGE
+    help: Average PSAPPSRV Processing time (Sec)
+    valueFactor: .001
+    labels:
+      process: $1_$2
+
+  - pattern: 'com.peoplesoft<Server=(\w+), Instance=(\d+), Type=RequestExecutorRuntime><>AverageTotalServiceTime'
+    name: peoplesoft_appsrv_average_total_svc_time
+    type: GAUGE
+    help: Average PSAPPSRV Total Service Time (Sec)
+    valueFactor: .001
+    labels:
+      process: $1_$2
+
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Load: Idle'
+    name: peoplesoft_appsrv_load
+    type: GAUGE
+    help: PeopleSoft Health Center "Load" Indicator (0=Idle, 1=Light, 2=Medium, 3=Heavy)
+    value: 0
+    labels:
+      domain: $1
+
+
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Load: Light'
+    name: peoplesoft_appsrv_load
+    type: GAUGE
+    help: PeopleSoft Health Center "Load" Indicator (0=Idle, 1=Light, 2=Medium, 3=Heavy)
+    value: 1
+    labels:
+      domain: $1
+
+
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Load: Medium'
+    name: peoplesoft_appsrv_load
+    type: GAUGE
+    help: PeopleSoft Health Center "Load" Indicator (0=Idle, 1=Light, 2=Medium, 3=Heavy)
+    value: 2
+    labels:
+      domain: $1
+
+
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Load: Heavy'
+    name: peoplesoft_appsrv_load
+    type: GAUGE
+    help: PeopleSoft Health Center "Load" Indicator (0=Idle, 1=Light, 2=Medium, 3=Heavy)
+    value: 3
+    labels:
+      domain: $1
+
+
+
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Health: Ok'
+    name: peoplesoft_appsrv_health
+    type: GAUGE
+    help: PeopleSoft Health Center "Health" Indicator (1=OK, 2=Warn, 3=Critical)
+    value: 1
+    labels:
+      domain: $1
+
+
+
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Health: Warn'
+    name: peoplesoft_appsrv_health
+    type: GAUGE
+    help: PeopleSoft Health Center "Health" Indicator (1=OK, 2=Warn, 3=Critical)
+    value: 2
+    labels:
+      domain: $1
+
+
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Health: Critical'
+    name: peoplesoft_appsrv_health
+    type: GAUGE
+    help: PeopleSoft Health Center "Health" Indicator (1=OK, 2=Warn, 3=Critical)
+    value: 3
+    labels:
+      domain: $1
+
+
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>ServerCount'
+    name: peoplesoft_appsrv_services_count
+    type: GAUGE
+    help: "Number of Services in APPSRV Domain: $1"
+    labels:
+      domain: $1
+ 
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>ServerDownCount'
+    name: peoplesoft_appsrv_services_down_count
+    type: GAUGE
+    help: "Number of Services DOWN in APPSRV Domain: $1"
+    labels:
+      domain: $1
+ 
+  - pattern: 'com.peoplesoft<DomainRuntime=(\w+), Type=NetworkStatisticsRuntime><>TCPSockets(\w+)'
+    name: peoplesoft_appsrv_tcp_state
+    type: GAUGE
+    help: Gauge of TCP Sockets in various states
+    labels:
+      domain: $1
+      state: $2
+
+
+
+
+
+
+
+
+ 
+ 
