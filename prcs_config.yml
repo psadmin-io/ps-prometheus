@@ -1,0 +1,18 @@
+---
+startDelaySeconds: 0
+ssl: false
+lowercaseOutputName: true
+lowercaseOutputLabelNames: false
+blacklistObjectNames: ["com.peoplesoft:DomainRuntime=*,Type=LogFileRuntime,Name=*"]
+rules:
+  - pattern: '.*'
+
+
+
+
+
+
+
+
+ 
+ 
