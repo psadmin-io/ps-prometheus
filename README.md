@@ -15,6 +15,8 @@ Choose a port number, and modify `psappsrv.cfg` or `psprcs.cfg` as shown:
 JavaVM Options=-Dxdo.ConfigFile=%PS_HOME%/appserv/xdo.cfg **-javaagent:/path/to/jmx_prometheus_javaagent-0.12.0.jar=PORTNUM:/path/to/config.yml** -Xms32m -Xmx256m
 ```
 
+## Notes
+This has currently only been tested on PeopleTools 8.56. Later releases might have changed the MBean info. Not Production tested yet.
 
 ## Credits
 Huge thanks to Nate Werner and his JMX metrics and Mike Ripley for his experiments with Javaagents with PeopleSoft.
