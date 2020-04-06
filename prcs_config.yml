@@ -1,18 +1,70 @@
 ---
 startDelaySeconds: 0
 ssl: false
+#consul settings for ps-jmx_exporter
+#consulRegister: true
+#consulHost: 
+#peoplesoft: true
+#consulType: external
 lowercaseOutputName: true
-lowercaseOutputLabelNames: false
-blacklistObjectNames: ["com.peoplesoft:DomainRuntime=*,Type=LogFileRuntime,Name=*"]
+lowercaseOutputLabelNames: true
+whitelistObjectNames: ["com.peoplesoft:Name=*,Type=DomainRuntime","com.peoplesoft:DomainRuntime=*,Type=TuxedoServerRuntime,Name=*","com.peoplesoft:DomainRuntime=*,Type=FileStoreRuntime,Name=PeopleSoftConfigHome"]
 rules:
-  - pattern: '.*'
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Health: Ok'
+    name: peoplesoft_psprcs_health
+    type: GAUGE
+    help: PeopleSoft Health Center "Health" Indicator (1=OK, 2=Warn, 3=Critical)
+    value: 1
 
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Health: Warn'
+    name: peoplesoft_psprcs_health
+    type: GAUGE
+    help: PeopleSoft Health Center "Health" Indicator (1=OK, 2=Warn, 3=Critical)
+    value: 2
 
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Health: Critical'
+    name: peoplesoft_psprcs_health
+    type: GAUGE
+    help: PeopleSoft Health Center "Health" Indicator (1=OK, 2=Warn, 3=Critical)
+    value: 3
 
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Load: Idle'
+    name: peoplesoft_psprcs_load
+    type: GAUGE
+    help: PeopleSoft Health Center "Load" Indicator (0=Idle, 1=Light, 2=Medium, 3=Heavy)
+    value: 0
 
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Load: Light'
+    name: peoplesoft_psprcs_load
+    type: GAUGE
+    help: PeopleSoft Health Center "Load" Indicator (0=Idle, 1=Light, 2=Medium, 3=Heavy)
+    value: 1
 
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Load: Medium'
+    name: peoplesoft_psprcs_load
+    type: GAUGE
+    help: PeopleSoft Health Center "Load" Indicator (0=Idle, 1=Light, 2=Medium, 3=Heavy)
+    value: 2
 
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>Load: Heavy'
+    name: peoplesoft_psprcs_load
+    type: GAUGE
+    help: PeopleSoft Health Center "Load" Indicator (0=Idle, 1=Light, 2=Medium, 3=Heavy)
+    value: 3
 
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>ServerCount'
+    name: peoplesoft_psprcs_servercount
+    type: GAUGE
+    help: "Number of services in PSPRCS Domain: $1"
 
- 
- 
+  - pattern: 'com.peoplesoft<Name=(\w+), Type=DomainRuntime><>ServerDownCount'
+    name: peoplesoft_psprcs_serverdowncount
+    type: GAUGE
+    help: "Number of services in DOWN PSPRCS Domain: $1"
+
+  - pattern: 'com.peoplesoft<DomainRuntime=(\w+), Type=TuxedoServerRuntime, Name=(\w+_\d+)><>TotalRequestCount'
+    name: peoplesoft_psprcs_totalrequestcount
+    type: COUNTER
+    help: "Total request count of $2"
+    labels:
+      process: $2
