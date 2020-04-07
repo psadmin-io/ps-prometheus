@@ -19,7 +19,7 @@ Also be sure to enable remote administration (port/user/pass is not important, e
 [PSTOOLS]
 Enable Remote Administration=1
 ```
-***Be sure to modify JavaVM Options in PSMONITORSRV***
+***Be sure to modify JavaVM Options in [PSMONITORSRV]***
 
 ## Notes
 This has currently only been tested on PeopleTools 8.56. Later releases might have changed the MBean info. Not Production tested yet.
